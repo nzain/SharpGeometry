@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace SharpGeometry.Tests
@@ -125,6 +126,51 @@ namespace SharpGeometry.Tests
 
             Assert.Throws<InvalidOperationException>(() => new Vector3D(0, 0, 0).ScaledTo(targetLength), "cannot normalize zero vector");
             Assert.Throws<ArgumentOutOfRangeException>(() => v.ScaledTo(-1), "negative length is invalid");
+        }
+
+        [Test]
+        public void VectorEquality()
+        {
+            Vector3D a = new Vector3D(1, 2, 3);
+            Vector3D a2 = new Vector3D(1.0, 2.0, 3.0);
+
+            Assert.That(a.Equals(a2), Is.True);
+            Assert.That(a == a2, Is.True);
+            Assert.That(a != a2, Is.False);
+            // symmetry
+            Assert.That(a2.Equals(a), Is.True);
+            Assert.That(a2 == a, Is.True);
+            Assert.That(a2 != a, Is.False);
+
+            Vector3D b = new Vector3D(1, 1, 1);
+            Assert.That(a.Equals(b), Is.False);
+            Assert.That(a == b, Is.False);
+            Assert.That(a != b, Is.True);
+            // symmetry
+            Assert.That(b.Equals(a), Is.False);
+            Assert.That(b == a, Is.False);
+            Assert.That(b != a, Is.True);
+        }
+
+        [Test]
+        public void VectorHashCodeCollisions()
+        {
+            const int n = 100000;
+            Random rnd = new Random(42);
+            HashSet<int> hashcodes = new HashSet<int>();
+            for (int i = 0; i < n; i++)
+            {
+                Vector3D v = new Vector3D(rnd.NextDouble() * 2 - 1, 
+                    rnd.NextDouble() * 100 - 50, 
+                    rnd.NextDouble() * 20 - 10);
+                int hash = v.GetHashCode();
+                hashcodes.Add(hash);
+            }
+            int collisions = n - hashcodes.Count;
+            Console.WriteLine($"{n} random vectors produced {hashcodes.Count} different hashcodes => {n-hashcodes.Count} collisions");
+            var percent = (double)collisions / (double)n;
+            Console.WriteLine($"collisions: {percent:P3} (raw {percent:F5})");
+            Assert.That(percent, Is.LessThan(0.01));
         }
     }
 }

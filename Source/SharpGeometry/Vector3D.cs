@@ -9,7 +9,7 @@ namespace SharpGeometry
     /// This immutable struct represents a vector in 3D space. Vectors always start at the origin <c>[0,0,0]</c> and only represent a direction, not a true coordinate.
     /// </summary>
     [DataContract]
-    public struct Vector3D
+    public struct Vector3D : IEquatable<Vector3D>
     {
         #region Public Constants
 
@@ -157,11 +157,41 @@ namespace SharpGeometry
             return this.SquaredLength() <= 0;
         }
 
+        #region Object Members & IEquatable<T>
+
         /// <inheritdoc />
         public override string ToString()
         {
             return string.Format(NumberFormatInfo.InvariantInfo, "[{0:F3} {1:F3} {2:F3}]", this.X, this.Y, this.Z);
         }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            return obj is Vector3D && this.Equals((Vector3D)obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            // less than 1% collisions over 100000 random vectors
+            unchecked // overflow is expected, explicitely unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + this.X.GetHashCode();
+                hash = hash * 23 + this.Y.GetHashCode();
+                hash = hash * 23 + this.Z.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <inheritdoc />
+        public bool Equals(Vector3D other)
+        {
+            return this == other; // delegate to operator
+        }
+
+        #endregion
 
         #endregion
 
@@ -190,6 +220,29 @@ namespace SharpGeometry
         #endregion
 
         #region Binary Operators
+
+        /// <summary>
+        /// Binary exact equality operator.
+        /// </summary>
+        /// <param name="l">Left operand.</param>
+        /// <param name="r">Right operand.</param>
+        /// <returns><c>true</c> if all components are exactly the same.</returns>
+        public static bool operator ==(Vector3D l, Vector3D r)
+        {
+            // do not use a tolerance here, although some people prefer this
+            return l.X == r.X && l.Y == r.Y && l.Z == r.Z;
+        }
+
+        /// <summary>
+        /// Binary inequality operator.
+        /// </summary>
+        /// <param name="l">Left operand.</param>
+        /// <param name="r">Right operand.</param>
+        /// <returns><c>true</c> if any component is not exactly the same.</returns>
+        public static bool operator !=(Vector3D l, Vector3D r)
+        {
+            return l.X != r.X || l.Y != r.Y || l.Z != r.Z;
+        }
 
         /// <summary>
         /// Binary plus adds the given vectors.
