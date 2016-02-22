@@ -61,7 +61,7 @@ namespace SharpGeometry.Tests
         public void VectorScalarMultiplication()
         {
             Vector3D v = new Vector3D(1, 2, 3);
-            double s = -Math.E;
+            const double s = -Math.E;
             Vector3D expected = new Vector3D(s * v.X, s * v.Y, s * v.Z);
 
             // left multiplication

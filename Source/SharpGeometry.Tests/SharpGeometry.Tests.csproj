@@ -50,8 +50,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="NUnitExtensions\Constraints\ApproximatelyConstraint.cs" />
-    <Compile Include="NUnitExtensions\Approx.cs" />
+    <Compile Include="EqualityComparer\Vector3DComparerTests.cs" />
     <Compile Include="Vector3DTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
