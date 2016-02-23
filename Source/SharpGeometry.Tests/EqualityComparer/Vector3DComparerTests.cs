@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using SharpGeometry.EqualityComparer;
@@ -61,6 +62,34 @@ namespace SharpGeometry.Tests.EqualityComparer
 
             Assert.That(src, Is.EqualTo(ok).Using(sut));
             Assert.That(src, Is.Not.EqualTo(bad).Using(sut));
+        }
+
+        [Test]
+        public void HashTest()
+        {
+            Random rnd = new Random(42);
+            Func<double, Vector3D> generator =
+                rng => new Vector3D(
+                    rnd.NextDouble() * rng - rng / 2,
+                    rnd.NextDouble() * rng - rng / 2,
+                    rnd.NextDouble() * rng - rng / 2);
+
+
+            const double tolerance = 0.1;
+            var sut = new Vector3DComparer(tolerance);
+            HashSet<Vector3D> set1 = new HashSet<Vector3D>();
+            HashSet<Vector3D> set2 = new HashSet<Vector3D>(sut);
+
+            const int n = 100000;
+            for (int i = 0; i < n; i++)
+            {
+                Vector3D v = generator(1);
+                set1.Add(v);
+                set2.Add(v);
+            }
+            Console.WriteLine($"set with default comparer got {set1.Count} items");
+            Console.WriteLine($"set with tolerant comparer got {set2.Count} items.");
+            Assert.That(set2.Count, Is.LessThan(set1.Count));
         }
     }
 }

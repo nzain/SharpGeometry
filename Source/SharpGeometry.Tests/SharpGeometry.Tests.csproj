@@ -50,7 +50,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="EqualityComparer\Point3DComparerTests.cs" />
     <Compile Include="EqualityComparer\Vector3DComparerTests.cs" />
+    <Compile Include="Point3DTests.cs" />
     <Compile Include="Vector3DTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

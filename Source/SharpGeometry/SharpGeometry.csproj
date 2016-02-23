@@ -42,6 +42,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EqualityComparer\Point3DComparer.cs" />
     <Compile Include="EqualityComparer\Vector3DComparer.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Vector3D.cs" />

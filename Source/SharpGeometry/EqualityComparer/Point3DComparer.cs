@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SharpGeometry.EqualityComparer
 {
     /// <summary>
-    /// Equality comparer for <see cref="Vector3D"/> based on a tolerance.
+    /// Equality comparer for <see cref="Point3D"/> based on a tolerance.
     /// </summary>
-    public class Vector3DComparer : IEqualityComparer<Vector3D>
+    public class Point3DComparer : IEqualityComparer<Point3D>
     {
         /// <summary>
-        /// Creates a new <see cref="Vector3D"/> equality comparer.
+        /// Creates a new <see cref="Point3D"/> equality comparer.
         /// </summary>
         /// <param name="tolerance">The tolerance (per dimension) to accept.</param>
-        public Vector3DComparer(double tolerance)
+        public Point3DComparer(double tolerance)
         {
             if (tolerance <= 0)
             {
@@ -27,7 +30,7 @@ namespace SharpGeometry.EqualityComparer
         public double Tolerance { get; }
 
         /// <inheritdoc/>
-        public bool Equals(Vector3D a, Vector3D b)
+        public bool Equals(Point3D a, Point3D b)
         {
             return Math.Abs(a.X - b.X) <= this.Tolerance
                 && Math.Abs(a.Y - b.Y) <= this.Tolerance
@@ -35,9 +38,9 @@ namespace SharpGeometry.EqualityComparer
         }
 
         /// <inheritdoc/>
-        public int GetHashCode(Vector3D v)
+        public int GetHashCode(Point3D p)
         {
-            // Ok, this is really stupid. The interface forces us to implement something we cannot provide.
+            // The interface forces us to implement something we cannot provide.
             // Return the exact same hashcode for everything => always collision => always fallback to Equals method.
             return 0;
 
