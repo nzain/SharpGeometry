@@ -24,11 +24,6 @@ namespace SharpGeometry.Tests
         public void ZeroVector()
         {
             var zero = new Vector3D(0, 0, 0);
-            Assert.That(zero.X, Is.EqualTo(0));
-            Assert.That(zero.Y, Is.EqualTo(0));
-            Assert.That(zero.Z, Is.EqualTo(0));
-
-            Assert.That(Vector3D.Zero, Is.EqualTo(zero));
             Assert.That(new Vector3D(), Is.EqualTo(zero));
             Assert.That(default(Vector3D), Is.EqualTo(zero));
         }
@@ -122,7 +117,7 @@ namespace SharpGeometry.Tests
             Assert.That(sut.X / sut.Z, Is.EqualTo(v.X / v.Z).Within(1e-10), "x-z ratio unchanged");
             Assert.That(sut.Y / sut.Z, Is.EqualTo(v.Y / v.Z).Within(1e-10), "y-z ratio unchanged");
 
-            Assert.That(sut.ScaledTo(0), Is.EqualTo(Vector3D.Zero), "scale to zero is somewhat useless, but valid");
+            Assert.That(sut.ScaledTo(0), Is.EqualTo(default(Vector3D)), "scale to zero is somewhat useless, but valid");
 
             Assert.Throws<InvalidOperationException>(() => new Vector3D(0, 0, 0).ScaledTo(targetLength), "cannot normalize zero vector");
             Assert.Throws<ArgumentOutOfRangeException>(() => v.ScaledTo(-1), "negative length is invalid");

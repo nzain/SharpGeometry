@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EqualityComparer\Vector3DComparer.cs" />
+    <Compile Include="Point3D.cs" />
     <Compile Include="Vector3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

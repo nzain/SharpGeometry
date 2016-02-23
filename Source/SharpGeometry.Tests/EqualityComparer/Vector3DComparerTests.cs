@@ -47,7 +47,7 @@ namespace SharpGeometry.Tests.EqualityComparer
             const double tolerance = 0.05;
             var sut = new Vector3DComparer(tolerance);
 
-            Vector3D[] src = new[] { Vector3D.Zero, Vector3D.XAxis, Vector3D.YAxis, Vector3D.ZAxis, };
+            Vector3D[] src = new[] { new Vector3D(), Vector3D.XAxis, Vector3D.YAxis, Vector3D.ZAxis, };
 
             Random rnd = new Random(42);
             Func<Vector3D, double, Vector3D> randomize =

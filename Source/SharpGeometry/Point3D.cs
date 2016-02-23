@@ -1,28 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace SharpGeometry
 {
     /// <summary>
-    /// This immutable struct represents a vector in 3D space. Vectors always start at the origin <c>[0,0,0]</c> and only represent a direction, not a true coordinate.
+    /// This immutable struct represents a point in 3D space. A point does not have a length or direction but instead
+    /// support the notion of distance to other points.
     /// </summary>
     [DataContract]
-    public struct Vector3D : IEquatable<Vector3D>
+    public struct Point3D
     {
-        #region Public Constants
-        
-        /// <summary>The <c>X</c> axis unit vector.</summary>
-        public static readonly Vector3D XAxis = new Vector3D(1, 0, 0);
-
-        /// <summary>The <c>Y</c> axis unit vector.</summary>
-        public static readonly Vector3D YAxis = new Vector3D(1, 0, 0);
-
-        /// <summary>The <c>Z</c> axis unit vector.</summary>
-        public static readonly Vector3D ZAxis = new Vector3D(1, 0, 0);
-
-        #endregion
 
         #region Public CTOR and Properties
 
@@ -32,7 +20,7 @@ namespace SharpGeometry
         /// <param name="x">The <see cref="X"/> coordinate.</param>
         /// <param name="y">The <see cref="Y"/> coordinate.</param>
         /// <param name="z">The <see cref="Z"/> coordinate.</param>
-        public Vector3D(double x, double y, double z)
+        public Point3D(double x, double y, double z)
         {
             this.X = x;
             this.Y = y;
@@ -43,7 +31,7 @@ namespace SharpGeometry
         /// Creates a new vector from an array with three elements <c>[x, y, z]</c>.
         /// </summary>
         /// <param name="values">An array of size three.</param>
-        public Vector3D(double[] values)
+        public Point3D(double[] values)
         {
             if (values == null)
             {
@@ -79,59 +67,25 @@ namespace SharpGeometry
         #endregion
 
         #region Public Methods
-
+        
         /// <summary>
-        /// Computes the squared length of this vector (cheap computation, no square root needed).
+        /// Computes the squared distance to the given point (cheap operation, no square root required).
         /// </summary>
-        /// <returns>The squared length of this vector.</returns>
-        public double SquaredLength()
+        /// <param name="other">The other point.</param>
+        /// <returns>The squared distance.</returns>
+        public double SquaredDistance(Point3D other)
         {
-            return this.X * this.X + this.Y * this.Y + this.Z * this.Z;
+            return SquaredDistance(this, other);
         }
 
         /// <summary>
-        /// Computes the euclidean length of this vector, that is, <c>Math.Sqrt(X²+Y²+Z²)</c>.
+        /// Computes the euclidean distance to the given point.
         /// </summary>
-        /// <returns></returns>
-        public double Length()
+        /// <param name="other">The other point.</param>
+        /// <returns>The euclidean distance.</returns>
+        public double Distance(Point3D other)
         {
-            return Math.Sqrt(this.SquaredLength());
-        }
-
-        /// <summary>
-        /// Returns a scaled copy of the desired length.
-        /// </summary>
-        /// <param name="length">The desired length.</param>
-        public Vector3D ScaledTo(double length)
-        {
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length));
-            }
-            double l2 = this.SquaredLength();
-            if (l2 <= 0)
-            {
-                throw new InvalidOperationException("Cannot scale a vector of zero length.");
-            }
-            double actualLength = Math.Sqrt(l2);
-            Debug.Assert(actualLength > 0);
-            return this * (length / actualLength);
-        }
-
-        /// <summary>
-        /// Returns a normalized (unit length) copy of this vector.
-        /// </summary>
-        /// <returns>A vector of unit length pointing in the same direction.</returns>
-        public Vector3D Normalized()
-        {
-            double l2 = this.SquaredLength();
-            if (l2 <= 0)
-            {
-                throw new InvalidOperationException("Cannot scale a vector of zero length.");
-            }
-            double actualLength = Math.Sqrt(l2);
-            Debug.Assert(actualLength > 0);
-            return this / actualLength;
+            return Math.Sqrt(SquaredDistance(this, other));
         }
 
         /// <summary>
@@ -145,14 +99,7 @@ namespace SharpGeometry
                 || double.IsInfinity(this.Z) || double.IsNaN(this.Z);
         }
 
-        /// <summary>
-        /// Checks if all components are zero.
-        /// </summary>
-        /// <returns><c>true</c> if all components are zero.</returns>
-        public bool IsZero()
-        {
-            return this.SquaredLength() <= 0;
-        }
+        #endregion
 
         #region Object Members & IEquatable<T>
 
@@ -165,13 +112,13 @@ namespace SharpGeometry
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            return obj is Vector3D && this.Equals((Vector3D)obj);
+            return obj is Point3D && this.Equals((Point3D)obj);
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            // less than 1% collisions over 100000 random vectors
+            // less than 1% collisions over 100000 random points
             unchecked // overflow is expected, explicitely unchecked
             {
                 int hash = 17;
@@ -183,25 +130,55 @@ namespace SharpGeometry
         }
 
         /// <inheritdoc />
-        public bool Equals(Vector3D other)
+        public bool Equals(Point3D other)
         {
             return this == other; // delegate to operator
         }
 
         #endregion
 
+        #region Static Methods
+
+        /// <summary>
+        /// Computes the squared distance between two points (cheap computation, no square root needed).
+        /// </summary>
+        /// <param name="a">The first point.</param>
+        /// <param name="b">The second point.</param>
+        /// <returns>The squared distance.</returns>
+        public static double SquaredDistance(Point3D a, Point3D b)
+        {
+            double delta = a.X - b.X;
+            double sumOfSquares = delta * delta;
+            delta = a.Y - b.Y;
+            sumOfSquares += delta * delta;
+            delta = a.Z - b.Z;
+            sumOfSquares += delta * delta;
+            return sumOfSquares;
+        }
+
+        /// <summary>
+        /// Computes the euclidean distance between two points.
+        /// </summary>
+        /// <param name="a">The first point.</param>
+        /// <param name="b">The second point.</param>
+        /// <returns>The euclidean distance.</returns>
+        public static double Distance(Point3D a, Point3D b)
+        {
+            return Math.Sqrt(SquaredDistance(a, b));
+        }
+
         #endregion
 
         #region Unary Operators
 
         /// <summary>
-        /// Unary minus returns the complement.
+        /// Unary minus is a mirror operation.
         /// </summary>
         /// <param name="r">Right operand.</param>
         /// <returns>The result.</returns>
-        public static Vector3D operator -(Vector3D r)
+        public static Point3D operator -(Point3D r)
         {
-            return new Vector3D(-r.X, -r.Y, -r.Z);
+            return new Point3D(-r.X, -r.Y, -r.Z);
         }
 
         /// <summary>
@@ -209,7 +186,7 @@ namespace SharpGeometry
         /// </summary>
         /// <param name="r">Right operand.</param>
         /// <returns>The result.</returns>
-        public static Vector3D operator +(Vector3D r)
+        public static Point3D operator +(Point3D r)
         {
             return r;
         }
@@ -224,7 +201,7 @@ namespace SharpGeometry
         /// <param name="l">Left operand.</param>
         /// <param name="r">Right operand.</param>
         /// <returns><c>true</c> if all components are exactly the same.</returns>
-        public static bool operator ==(Vector3D l, Vector3D r)
+        public static bool operator ==(Point3D l, Point3D r)
         {
             // do not use a tolerance here, although some people prefer this
             return l.X == r.X && l.Y == r.Y && l.Z == r.Z;
@@ -236,68 +213,31 @@ namespace SharpGeometry
         /// <param name="l">Left operand.</param>
         /// <param name="r">Right operand.</param>
         /// <returns><c>true</c> if any component is not exactly the same.</returns>
-        public static bool operator !=(Vector3D l, Vector3D r)
+        public static bool operator !=(Point3D l, Point3D r)
         {
             return l.X != r.X || l.Y != r.Y || l.Z != r.Z;
         }
 
         /// <summary>
-        /// Binary plus adds the given vectors.
+        /// Binary plus offsets the given point by a vector.
         /// </summary>
         /// <param name="l">Left operand.</param>
         /// <param name="r">Right operand.</param>
         /// <returns>The result.</returns>
-        public static Vector3D operator +(Vector3D l, Vector3D r)
+        public static Point3D operator +(Point3D l, Vector3D r)
         {
-            return new Vector3D(l.X + r.X, l.Y + r.Y, l.Z + r.Z);
+            return new Point3D(l.X + r.X, l.Y + r.Y, l.Z + r.Z);
         }
 
         /// <summary>
-        /// Binary minus subtracts the given vectors.
+        /// Binary minus offsets the given point by the complement vector.
         /// </summary>
         /// <param name="l">Left operand.</param>
         /// <param name="r">Right operand.</param>
         /// <returns>The result.</returns>
-        public static Vector3D operator -(Vector3D l, Vector3D r)
+        public static Point3D operator -(Point3D l, Vector3D r)
         {
-            return new Vector3D(l.X - r.X, l.Y - r.Y, l.Z - r.Z);
-        }
-
-        /// <summary>
-        /// Left multiplcation with a scalar value.
-        /// </summary>
-        /// <param name="scalar">The scalar.</param>
-        /// <param name="v">The vector.</param>
-        /// <returns>The result.</returns>
-        public static Vector3D operator *(double scalar, Vector3D v)
-        {
-            return new Vector3D(scalar * v.X, scalar * v.Y, scalar * v.Z);
-        }
-
-        /// <summary>
-        /// Right multiplcation with a scalar value.
-        /// </summary>
-        /// <param name="v">The vector.</param>
-        /// <param name="scalar">The scalar.</param>
-        /// <returns>The result.</returns>
-        public static Vector3D operator *(Vector3D v, double scalar)
-        {
-            return new Vector3D(v.X * scalar, v.Y * scalar, v.Z * scalar);
-        }
-
-        /// <summary>
-        /// Right division by a scalar value.
-        /// </summary>
-        /// <param name="v">The vector.</param>
-        /// <param name="scalar">The scalar.</param>
-        /// <returns>The result.</returns>
-        public static Vector3D operator /(Vector3D v, double scalar)
-        {
-            if (scalar == 0)
-            {
-                throw new DivideByZeroException();
-            }
-            return new Vector3D(v.X / scalar, v.Y / scalar, v.Z / scalar);
+            return new Point3D(l.X - r.X, l.Y - r.Y, l.Z - r.Z);
         }
 
         #endregion
