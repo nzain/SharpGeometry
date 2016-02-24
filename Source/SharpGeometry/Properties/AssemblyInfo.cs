@@ -1,5 +1,6 @@
 ﻿using System.Resources;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 [assembly: AssemblyTitle("SharpGeometry")]
 [assembly: AssemblyProduct("SharpGeometry")]
@@ -8,3 +9,6 @@ using System.Reflection;
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: AssemblyVersion("0.1.*")]
+
+// could use an url, if we had one :) linking github is wrong, so I'll go with an URN.
+[assembly: ContractNamespaceAttribute("urn:SharpGeometry", ClrNamespace = "SharpGeometry")]

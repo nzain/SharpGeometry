@@ -12,7 +12,7 @@ namespace SharpGeometry
     public struct Vector3D : IEquatable<Vector3D>
     {
         #region Public Constants
-        
+
         /// <summary>The <c>X</c> axis unit vector.</summary>
         public static readonly Vector3D XAxis = new Vector3D(1, 0, 0);
 
@@ -21,6 +21,19 @@ namespace SharpGeometry
 
         /// <summary>The <c>Z</c> axis unit vector.</summary>
         public static readonly Vector3D ZAxis = new Vector3D(1, 0, 0);
+
+        #endregion
+
+        #region Private Readonly Fields (required for serialization)
+
+        [DataMember(Order = 0, Name = "X", IsRequired = true)]
+        private readonly double _x;
+
+        [DataMember(Order = 1, Name = "Y", IsRequired = true)]
+        private readonly double _y;
+
+        [DataMember(Order = 2, Name = "Z", IsRequired = true)]
+        private readonly double _z;
 
         #endregion
 
@@ -34,9 +47,9 @@ namespace SharpGeometry
         /// <param name="z">The <see cref="Z"/> coordinate.</param>
         public Vector3D(double x, double y, double z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            this._x = x;
+            this._y = y;
+            this._z = z;
         }
 
         /// <summary>
@@ -53,28 +66,25 @@ namespace SharpGeometry
             {
                 throw new ArgumentException($"Expected an array of length 3, but actual length is {values.Length}", nameof(values));
             }
-            this.X = values[0];
-            this.Y = values[1];
-            this.Z = values[2];
+            this._x = values[0];
+            this._y = values[1];
+            this._z = values[2];
         }
 
         /// <summary>
-        /// Gets the <c>X</c> coordinate of this vector.
+        /// Gets the <c>X</c> coordinate (immutable) of this vector.
         /// </summary>
-        [DataMember(Order = 0, IsRequired = true)]
-        public double X { get; }
+        public double X => this._x;
 
         /// <summary>
-        /// Gets the <c>Y</c> coordinate of this vector.
+        /// Gets the <c>Y</c> coordinate (immutable) of this vector.
         /// </summary>
-        [DataMember(Order = 1, IsRequired = true)]
-        public double Y { get; }
+        public double Y => this._y;
 
         /// <summary>
-        /// Gets the <c>Z</c> coordinate of this vector.
+        /// Gets the <c>Z</c> coordinate (immutable) of this vector.
         /// </summary>
-        [DataMember(Order = 2, IsRequired = true)]
-        public double Z { get; }
+        public double Z => this._z;
 
         #endregion
 

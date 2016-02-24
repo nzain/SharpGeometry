@@ -40,6 +40,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,6 +53,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DataContractTests.cs" />
     <Compile Include="EqualityComparer\Point3DComparerTests.cs" />
     <Compile Include="EqualityComparer\Vector3DComparerTests.cs" />
     <Compile Include="Point3DTests.cs" />

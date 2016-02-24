@@ -11,6 +11,18 @@ namespace SharpGeometry
     [DataContract]
     public struct Point3D
     {
+        #region Private Readonly Fields (required for serialization)
+
+        [DataMember(Order = 0, Name = "X", IsRequired = true)]
+        private readonly double _x;
+
+        [DataMember(Order = 1, Name = "Y", IsRequired = true)]
+        private readonly double _y;
+
+        [DataMember(Order = 2, Name = "Z", IsRequired = true)]
+        private readonly double _z;
+
+        #endregion
 
         #region Public CTOR and Properties
 
@@ -22,9 +34,9 @@ namespace SharpGeometry
         /// <param name="z">The <see cref="Z"/> coordinate.</param>
         public Point3D(double x, double y, double z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            this._x = x;
+            this._y = y;
+            this._z = z;
         }
 
         /// <summary>
@@ -41,33 +53,31 @@ namespace SharpGeometry
             {
                 throw new ArgumentException($"Expected an array of length 3, but actual length is {values.Length}", nameof(values));
             }
-            this.X = values[0];
-            this.Y = values[1];
-            this.Z = values[2];
+            this._x = values[0];
+            this._y = values[1];
+            this._z = values[2];
         }
 
-        /// <summary>
-        /// Gets the <c>X</c> coordinate of this vector.
-        /// </summary>
-        [DataMember(Order = 0, IsRequired = true)]
-        public double X { get; }
 
         /// <summary>
-        /// Gets the <c>Y</c> coordinate of this vector.
+        /// Gets the <c>X</c> coordinate (immutable) of this point.
         /// </summary>
-        [DataMember(Order = 1, IsRequired = true)]
-        public double Y { get; }
+        public double X => this._x;
 
         /// <summary>
-        /// Gets the <c>Z</c> coordinate of this vector.
+        /// Gets the <c>Y</c> coordinate (immutable) of this point.
         /// </summary>
-        [DataMember(Order = 2, IsRequired = true)]
-        public double Z { get; }
+        public double Y => this._y;
+
+        /// <summary>
+        /// Gets the <c>Z</c> coordinate (immutable) of this point.
+        /// </summary>
+        public double Z => this._z;
 
         #endregion
 
         #region Public Methods
-        
+
         /// <summary>
         /// Computes the squared distance to the given point (cheap operation, no square root required).
         /// </summary>
