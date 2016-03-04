@@ -1,0 +1,9 @@
+version: 0.2.{build}
+
+platform: Any CPU
+before_build:
+- cmd: nuget restore
+build:
+  project: Source/SharpGeometry.sln
+  verbosity: minimal
+
