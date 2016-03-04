@@ -1,2 +1,11 @@
+# NuGet
+cache:
+  - packages -> **\packages.config
 before_build:
 - cmd: nuget restore Source/SharpGeometry.sln
+
+platform: Any CPU
+configuration: Release
+build:
+  project: Source/SharpGeometry.sln
+  verbosity: minimal
