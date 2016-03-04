@@ -1,4 +1,2 @@
 before_build:
 - cmd: nuget restore
-build:
-  project: Source/SharpGeometry.sln
