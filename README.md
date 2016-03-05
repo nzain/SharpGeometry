@@ -3,7 +3,9 @@ Comming soon: Simple 2D/3D geometry package for .NET written in C#. Point, vecto
 
 This is my first open source project, just getting started.
 
-# Unit Tests and Code Coverage
+# Status
+[![Build status](https://ci.appveyor.com/api/projects/status/5f3pmxvs73hd22x1?svg=true)](https://ci.appveyor.com/project/nzain/sharpgeometry)
+
 31/31 Tests pass
 
 ![Line Coverage](http://nzain.github.io/SharpGeometry/coverage/badge_linecoverage.svg)
