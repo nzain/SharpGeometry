@@ -6,6 +6,11 @@ This is my first open source project, just getting started.
 # Status
 [![Build status](https://ci.appveyor.com/api/projects/status/5f3pmxvs73hd22x1?svg=true)](https://ci.appveyor.com/project/nzain/sharpgeometry)
 
+<a href="https://scan.coverity.com/projects/nzain-sharpgeometry">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/8157/badge.svg"/>
+</a>
+
 31/31 Tests pass
 
 ![Line Coverage](http://nzain.github.io/SharpGeometry/coverage/badge_linecoverage.svg)
