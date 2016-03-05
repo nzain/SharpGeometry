@@ -8,7 +8,7 @@ build:
   verbosity: minimal
 
 after_test: 
-  - OpenCover.bat
+  - Scripts\\OpenCover.bat
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
-  - codecov -f "TestResults/Coverage.xml"
+  - codecov -f "OpenCover/Coverage.xml"
