@@ -1,4 +1,7 @@
 @ECHO OFF
+CALL %~dp0%\Build.bat
+CALL %~dp0%\OpenCover.bat
+
 REM go to repository root
 cd "%~dp0%\.."
 

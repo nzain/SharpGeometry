@@ -8,7 +8,7 @@ namespace SharpGeometry.Tests
     public class Vector3DTests
     {
         [Test]
-        public void VectorProperties()
+        public void VectorCtor()
         {
             var sut = new Vector3D(1, 2, 3);
             Console.WriteLine(sut);
@@ -21,11 +21,48 @@ namespace SharpGeometry.Tests
         }
 
         [Test]
+        public void VectorCtorFromArray()
+        {
+            double[] arr = { 0.1, 0.2, 0.3 };
+            var sut = new Vector3D(arr);
+            Assert.That(sut.X, Is.EqualTo(arr[0]));
+            Assert.That(sut.Y, Is.EqualTo(arr[1]));
+            Assert.That(sut.Z, Is.EqualTo(arr[2]));
+        }
+
+        [Test]
+        public void VectorCtorFromInvalidArrays()
+        {
+            double[] empty = { };
+            double[] one = { 0.2 };
+            double[] two = { 1, 2 };
+            double[] many = new double[4];
+            Assert.Throws<ArgumentNullException>(() => new Vector3D(null));
+            Assert.Throws<ArgumentException>(() => new Vector3D(empty));
+            Assert.Throws<ArgumentException>(() => new Vector3D(one));
+            Assert.Throws<ArgumentException>(() => new Vector3D(two));
+            Assert.Throws<ArgumentException>(() => new Vector3D(many));
+        }
+
+        [Test]
         public void ZeroVector()
         {
             var zero = new Vector3D(0, 0, 0);
             Assert.That(new Vector3D(), Is.EqualTo(zero));
             Assert.That(default(Vector3D), Is.EqualTo(zero));
+            Assert.That(zero.IsZero(), Is.True);
+        }
+
+        [Test]
+        public void UnaryOperators()
+        {
+            Vector3D a = new Vector3D(1, 2, 3);
+            var sut = +a;
+            Assert.That(a, Is.EqualTo(sut));
+            sut = -a;
+            Assert.That(sut.X, Is.EqualTo(-a.X));
+            Assert.That(sut.Y, Is.EqualTo(-a.Y));
+            Assert.That(sut.Z, Is.EqualTo(-a.Z));
         }
 
         [Test]
