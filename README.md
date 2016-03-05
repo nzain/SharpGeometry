@@ -13,6 +13,8 @@ This is my first open source project, just getting started.
 
 31/31 Tests pass
 
+[![codecov.io](https://codecov.io/github/nzain/SharpGeometry/coverage.svg?branch=master)](https://codecov.io/github/nzain/SharpGeometry?branch=master)
+
 ![Line Coverage](http://nzain.github.io/SharpGeometry/coverage/badge_linecoverage.svg)
 
 ![Line Coverage](http://nzain.github.io/SharpGeometry/coverage/badge_branchcoverage.svg)
