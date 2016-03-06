@@ -182,6 +182,10 @@ namespace SharpGeometry.Tests
             Assert.That(b.Equals(a), Is.False);
             Assert.That(b == a, Is.False);
             Assert.That(b != a, Is.True);
+
+            // obj
+            Assert.That(a.Equals("cat"), Is.False);
+            Assert.That(a.Equals(null), Is.False);
         }
 
         [Test]

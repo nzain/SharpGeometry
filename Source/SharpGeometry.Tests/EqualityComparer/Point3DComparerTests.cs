@@ -60,8 +60,8 @@ namespace SharpGeometry.Tests.EqualityComparer
             var sut = new Point3DComparer(tolerance);
             HashSet<Point3D> set1 = new HashSet<Point3D>();
             HashSet<Point3D> set2 = new HashSet<Point3D>(sut);
-
-            const int n = 100000;
+            
+            const int n = 100;
             for (int i = 0; i < n; i++)
             {
                 Point3D v = generator(1);

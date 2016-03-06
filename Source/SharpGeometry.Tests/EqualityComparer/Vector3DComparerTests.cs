@@ -79,8 +79,8 @@ namespace SharpGeometry.Tests.EqualityComparer
             var sut = new Vector3DComparer(tolerance);
             HashSet<Vector3D> set1 = new HashSet<Vector3D>();
             HashSet<Vector3D> set2 = new HashSet<Vector3D>(sut);
-
-            const int n = 100000;
+            
+            const int n = 100;
             for (int i = 0; i < n; i++)
             {
                 Vector3D v = generator(1);
