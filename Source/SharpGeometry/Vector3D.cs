@@ -88,7 +88,68 @@ namespace SharpGeometry
 
         #endregion
 
-        #region Public Methods
+        #region Public Static Methods
+
+        /// <summary>
+        /// Computes the dot product <c>a · b</c> of the given vectors.
+        /// </summary>
+        /// <param name="a">The first vector.</param>
+        /// <param name="b">The second vector.</param>
+        /// <returns>The dot product.</returns>
+        /// <remarks>See <a href="https://en.wikipedia.org/wiki/Dot_product"/> for more information.</remarks>
+        public static double DotProduct(Vector3D a, Vector3D b)
+        {
+            return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+        }
+
+        /// <summary>
+        /// Computes the cross product <c>a × b</c> of the given vectors.
+        /// Right-hand rule: When <c>a</c> is your index finger and <c>b</c> is your middle finger,
+        /// then your thumb points in the direction of the cross product.
+        /// The magnitude of the cross product is equal to the area of the parallelogram that the 
+        /// vectors span.
+        /// </summary>
+        /// <param name="a">The first vector.</param>
+        /// <param name="b">The second vector.</param>
+        /// <returns>The cross product.</returns>
+        /// <remarks>See <a href="https://en.wikipedia.org/wiki/Cross_product"/> for more information.</remarks>
+        public static Vector3D CrossProduct(Vector3D a, Vector3D b)
+        {
+            return new Vector3D(
+                a.Y * b.Z - a.Z * b.Y,
+                a.Z * b.X - a.X * b.Z,
+                a.X * b.Y - a.Y * b.X);
+        }
+
+        #endregion
+
+        #region Public Struct Methods
+
+        /// <summary>
+        /// Computes the dot product <c>this · b</c> with the given vector.
+        /// </summary>
+        /// <param name="b">The other vector.</param>
+        /// <returns>The dot product.</returns>
+        /// <remarks>See <a href="https://en.wikipedia.org/wiki/Dot_product"/> for more information.</remarks>
+        public double DotProduct(Vector3D b)
+        {
+            return DotProduct(this, b);
+        }
+
+        /// <summary>
+        /// Computes the cross product <c>this × b</c> with the given vector.
+        /// Right-hand rule: When <c>this</c> is your index finger and <c>b</c> is your middle finger,
+        /// then your thumb points in the direction of the cross product.
+        /// The magnitude of the cross product is equal to the area of the parallelogram that the 
+        /// vectors span.
+        /// </summary>
+        /// <param name="b">The other vector.</param>
+        /// <returns>The cross product.</returns>
+        /// <remarks>See <a href="https://en.wikipedia.org/wiki/Cross_product"/> for more information.</remarks>
+        public Vector3D CrossProduct(Vector3D b)
+        {
+            return CrossProduct(this, b);
+        }
 
         /// <summary>
         /// Computes the squared length of this vector (cheap computation, no square root needed).

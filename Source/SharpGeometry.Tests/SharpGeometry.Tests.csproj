@@ -56,8 +56,10 @@
     <Compile Include="DataContractTests.cs" />
     <Compile Include="EqualityComparer\Point3DComparerTests.cs" />
     <Compile Include="EqualityComparer\Vector3DComparerTests.cs" />
+    <Compile Include="Vector3DMethodTests.cs" />
+    <Compile Include="Vector3DOperatorTests.cs" />
     <Compile Include="Point3DTests.cs" />
-    <Compile Include="Vector3DTests.cs" />
+    <Compile Include="Vector3DSimpleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
