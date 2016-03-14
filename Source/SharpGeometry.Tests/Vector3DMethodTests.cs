@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpGeometry.EqualityComparer;
 
 namespace SharpGeometry.Tests
 {
@@ -38,6 +39,47 @@ namespace SharpGeometry.Tests
 
             Assert.Throws<InvalidOperationException>(() => new Vector3D(0, 0, 0).ScaledTo(targetLength), "cannot normalize zero vector");
             Assert.Throws<ArgumentOutOfRangeException>(() => v.ScaledTo(-1), "negative length is invalid");
+        }
+
+        [Test]
+        public void DotProduct()
+        {
+            Vector3D a = new Vector3D(2, 4, 6);
+            Vector3D b = new Vector3D(-3, -5, -7);
+            var sut = Vector3D.DotProduct(a, b);
+            Assert.That(sut, Is.EqualTo(-6 - 20 - 42));
+            Assert.That(sut, Is.EqualTo(a.DotProduct(b)));
+            Assert.That(sut, Is.EqualTo(b.DotProduct(a)));
+
+            Assert.That(Vector3D.DotProduct(a.Normalized(), a.Normalized()), Is.EqualTo(1).Within(1e-10));
+            Assert.That(Vector3D.DotProduct(b.Normalized(), b.Normalized()), Is.EqualTo(1).Within(1e-10));
+            Assert.That(Vector3D.DotProduct(Vector3D.XAxis, Vector3D.XAxis), Is.EqualTo(1));
+            Assert.That(Vector3D.DotProduct(Vector3D.YAxis, Vector3D.YAxis), Is.EqualTo(1));
+            Assert.That(Vector3D.DotProduct(Vector3D.ZAxis, Vector3D.ZAxis), Is.EqualTo(1));
+
+            Assert.That(Vector3D.DotProduct(Vector3D.XAxis, +Vector3D.YAxis), Is.EqualTo(0));
+            Assert.That(Vector3D.DotProduct(Vector3D.XAxis, +Vector3D.ZAxis), Is.EqualTo(0));
+            Assert.That(Vector3D.DotProduct(Vector3D.YAxis, +Vector3D.ZAxis), Is.EqualTo(0));
+            Assert.That(Vector3D.DotProduct(Vector3D.XAxis, -Vector3D.YAxis), Is.EqualTo(0));
+            Assert.That(Vector3D.DotProduct(Vector3D.XAxis, -Vector3D.ZAxis), Is.EqualTo(0));
+            Assert.That(Vector3D.DotProduct(Vector3D.YAxis, -Vector3D.ZAxis), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void CrossProduct()
+        {
+            var tolerance = new TolerantEqualityComparer(1e-10);
+            var xa = Vector3D.XAxis;
+            var ya = Vector3D.YAxis;
+            var za = Vector3D.ZAxis;
+            // verify right hand rule for unit vectors
+            Assert.That(Vector3D.CrossProduct(xa, +ya), Is.EqualTo(+za));
+            Assert.That(Vector3D.CrossProduct(xa, +za), Is.EqualTo(-ya));
+            Assert.That(Vector3D.CrossProduct(ya, +za), Is.EqualTo(+xa));
+            // symmetry
+            Assert.That(xa.CrossProduct(-ya), Is.EqualTo(-za));
+            Assert.That(xa.CrossProduct(-za), Is.EqualTo(+ya));
+            Assert.That(ya.CrossProduct(-za), Is.EqualTo(-xa));
         }
     }
 }

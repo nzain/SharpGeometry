@@ -17,10 +17,10 @@ namespace SharpGeometry
         public static readonly Vector3D XAxis = new Vector3D(1, 0, 0);
 
         /// <summary>The <c>Y</c> axis unit vector.</summary>
-        public static readonly Vector3D YAxis = new Vector3D(1, 0, 0);
+        public static readonly Vector3D YAxis = new Vector3D(0, 1, 0);
 
         /// <summary>The <c>Z</c> axis unit vector.</summary>
-        public static readonly Vector3D ZAxis = new Vector3D(1, 0, 0);
+        public static readonly Vector3D ZAxis = new Vector3D(0, 0, 1);
 
         #endregion
 

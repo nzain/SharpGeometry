@@ -4,15 +4,20 @@ using System.Collections.Generic;
 namespace SharpGeometry.EqualityComparer
 {
     /// <summary>
-    /// Equality comparer for <see cref="Vector3D"/> based on a tolerance.
+    /// Tolerant equality comparer based on a tolerance. Not useful for hashing. Tolerant equality
+    /// is implemented for the following classes:
+    /// <list type="bullet">
+    /// <item><see cref="Vector3D"/></item>
+    /// <item><see cref="Point3D"/></item>
+    /// </list>
     /// </summary>
-    public class Vector3DComparer : IEqualityComparer<Vector3D>
+    public class TolerantEqualityComparer : IEqualityComparer<Vector3D>, IEqualityComparer<Point3D>
     {
         /// <summary>
         /// Creates a new <see cref="Vector3D"/> equality comparer.
         /// </summary>
         /// <param name="tolerance">The tolerance (per dimension) to accept.</param>
-        public Vector3DComparer(double tolerance)
+        public TolerantEqualityComparer(double tolerance)
         {
             if (tolerance <= 0)
             {
@@ -29,9 +34,22 @@ namespace SharpGeometry.EqualityComparer
         /// <inheritdoc/>
         public bool Equals(Vector3D a, Vector3D b)
         {
-            return Math.Abs(a.X - b.X) <= this.Tolerance
-                && Math.Abs(a.Y - b.Y) <= this.Tolerance
-                && Math.Abs(a.Z - b.Z) <= this.Tolerance;
+            return this.Equals(a.X, b.X)
+                && this.Equals(a.Y, b.Y)
+                && this.Equals(a.Z, b.Z);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Point3D a, Point3D b)
+        {
+            return this.Equals(a.X, b.X)
+                && this.Equals(a.Y, b.Y)
+                && this.Equals(a.Z, b.Z);
+        }
+
+        private bool Equals(double a, double b)
+        {
+            return Math.Abs(a - b) <= this.Tolerance;
         }
 
         /// <inheritdoc/>
@@ -40,8 +58,10 @@ namespace SharpGeometry.EqualityComparer
             // Ok, this is really stupid. The interface forces us to implement something we cannot provide.
             // Return the exact same hashcode for everything => always collision => always fallback to Equals method.
             return 0;
-
             // Wrong: return v.GetHashCode()
         }
+
+        /// <inheritdoc/>
+        public int GetHashCode(Point3D p) => 0;
     }
 }

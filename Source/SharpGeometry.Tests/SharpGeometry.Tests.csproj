@@ -54,8 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DataContractTests.cs" />
-    <Compile Include="EqualityComparer\Point3DComparerTests.cs" />
-    <Compile Include="EqualityComparer\Vector3DComparerTests.cs" />
+    <Compile Include="EqualityComparer\TolerantEqualityComparerTests.cs" />
     <Compile Include="Vector3DMethodTests.cs" />
     <Compile Include="Vector3DOperatorTests.cs" />
     <Compile Include="Point3DTests.cs" />
