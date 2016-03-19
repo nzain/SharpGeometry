@@ -62,7 +62,7 @@ namespace SharpGeometry.Tests
             var dist2 = Point3D.SquaredDistance(a, b);
             var dist = Point3D.Distance(a, b);
 
-            double expectedSq = 4 * 4 + 3 * 3 + 2 * 2;
+            double expectedSq = 4*4 + 3*3 + 2*2;
             Assert.That(dist2, Is.EqualTo(expectedSq).Within(1e-10));
             Assert.That(dist, Is.EqualTo(Math.Sqrt(expectedSq)).Within(1e-10));
 
@@ -151,6 +151,21 @@ namespace SharpGeometry.Tests
 
             var sut = p - other;
             Assert.That(sut, Is.EqualTo(new Point3D(6, 6, 6)));
+        }
+
+        [Test]
+        public void PointVectorCasts()
+        {
+            Point3D p = new Point3D(1, 2, 3);
+            Vector3D v = (Vector3D)p;
+            Assert.That(v.X, Is.EqualTo(p.X));
+            Assert.That(v.Y, Is.EqualTo(p.Y));
+            Assert.That(v.Z, Is.EqualTo(p.Z));
+
+            Point3D p2 = (Point3D)v;
+            Assert.That(p2.X, Is.EqualTo(p.X));
+            Assert.That(p2.Y, Is.EqualTo(p.Y));
+            Assert.That(p2.Z, Is.EqualTo(p.Z));
         }
     }
 }

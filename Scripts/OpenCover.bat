@@ -15,5 +15,6 @@ ECHO ---[ OpenCover + NUnit ]---
 	-targetargs:".\Source\SharpGeometry.Tests\SharpGeometry.Tests.csproj --config=%config% -noh --work=.\OpenCover --out=TestResults.txt" ^
 	-output:".\OpenCover\Coverage.xml" ^
 	-filter:"+[*]* -[*Tests]*" ^
+	-threshold:100 ^
 	-skipautoprops ^
 	-showunvisited

@@ -81,5 +81,28 @@ namespace SharpGeometry.Tests
             Assert.That(xa.CrossProduct(-za), Is.EqualTo(+ya));
             Assert.That(ya.CrossProduct(-za), Is.EqualTo(-xa));
         }
+
+        [Test]
+        public void InnerAngle()
+        {
+            Vector3D a = Vector3D.XAxis;
+            Vector3D b = Vector3D.XAxis;
+            double angle = Vector3D.InnerAngle(a, b);
+            Assert.That(angle, Is.EqualTo(0));
+
+            b = 3*Vector3D.YAxis; // 90°, length must not affect the InnerAngle
+            angle = Vector3D.InnerAngle(a, b);
+            Assert.That(angle, Is.EqualTo(Math.PI/2));
+
+            b = -Vector3D.XAxis; // linearly dependent, facing in opposite directions
+            angle = Vector3D.InnerAngle(a, b);
+            Assert.That(angle, Is.EqualTo(Math.PI));
+
+            a = new Vector3D(1, 2, 3);
+            b = new Vector3D(-3, -7, -1);
+            angle = Vector3D.InnerAngle(a, b);
+            Assert.That(a.InnerAngle(b), Is.EqualTo(b.InnerAngle(a))); // commutative, it's always the inner InnerAngle
+            Assert.That(angle, Is.EqualTo(2.34045339128917).Within(1e-10));
+        }
     }
 }
