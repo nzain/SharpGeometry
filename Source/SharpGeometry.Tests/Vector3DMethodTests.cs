@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
+using SharpGeometry.EqualityComparer;
 
 namespace SharpGeometry.Tests
 {
@@ -103,6 +105,45 @@ namespace SharpGeometry.Tests
             angle = Vector3D.InnerAngle(a, b);
             Assert.That(a.InnerAngle(b), Is.EqualTo(b.InnerAngle(a))); // commutative, it's always the inner InnerAngle
             Assert.That(angle, Is.EqualTo(2.34045339128917).Within(1e-10));
+        }
+
+        [Test]
+        public void Rotated()
+        {
+            var v = new Vector3D(1, 2, 3);
+            var rotated = v.Rotated(Vector3D.YAxis, Math.PI);
+            //Console.WriteLine(rotated);
+            Assert.That(rotated.X, Is.EqualTo(-1).Within(1e-10));
+            Assert.That(rotated.Z, Is.EqualTo(-3).Within(1e-10));
+
+            v = new Vector3D(1, 0, 0);
+            rotated = v.Rotated(Vector3D.YAxis, 10.0/180.0*Math.PI);
+            //Console.WriteLine("{0} => {1}", v, rotated);
+            Assert.That(rotated.X, Is.EqualTo(+0.985).Within(0.001));
+            Assert.That(rotated.Y, Is.EqualTo(+0.000).Within(1e-10));
+            Assert.That(rotated.Z, Is.EqualTo(-0.174).Within(0.001));
+        }
+
+        [Test]
+        public void Rotated2()
+        {
+            IEqualityComparer<Vector3D> tolerantComparer = new TolerantEqualityComparer(1e-10);
+            const double angle = Math.PI/2;
+            var vec = new Vector3D(1, 2, 3);
+            var axis = Vector3D.ZAxis;
+            var sut = vec.Rotated(axis, angle);
+            //Console.WriteLine("rotate {0} about {1} by {2}° --> {3}", vec, axis, angle * 180 / Math.PI, sut);
+            Assert.That(sut, Is.EqualTo(new Vector3D(-2, +1, 3)).Using(tolerantComparer));
+
+            axis = Vector3D.XAxis;
+            sut = vec.Rotated(axis, angle);
+            //Console.WriteLine("rotate {0} about {1} by {2}° --> {3}", vec, axis, angle * 180 / Math.PI, sut);
+            Assert.That(sut, Is.EqualTo(new Vector3D(1, -3, +2)).Using(tolerantComparer));
+
+            axis = Vector3D.YAxis;
+            sut = vec.Rotated(axis, angle);
+            //Console.WriteLine("rotate {0} about {1} by {2}° --> {3}", vec, axis, angle * 180 / Math.PI, sut);
+            Assert.That(sut, Is.EqualTo(new Vector3D(+3, 2, -1)).Using(tolerantComparer));
         }
     }
 }

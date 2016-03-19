@@ -19,6 +19,9 @@ namespace SharpGeometry.Tests
                 7.0, 8.0, 9.0);
             Matrix3D c = Matrix3D.Identity;
 
+            Assert.IsFalse(a.IsUndefined());
+            Assert.IsFalse(b.IsUndefined());
+            Assert.IsFalse(c.IsUndefined());
             Assert.That(a, Is.EqualTo(b));
             Assert.That(a.Equals(b), Is.True);
             Assert.That((a == b), Is.True);
