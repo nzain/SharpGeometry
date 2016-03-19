@@ -12,8 +12,10 @@ namespace SharpGeometry.Tests.EqualityComparer
         [Test]
         public void CtorThrowsForInvalidArgs()
         {
+            // ReSharper disable ObjectCreationAsStatement
             Assert.Throws<ArgumentOutOfRangeException>(() => new TolerantEqualityComparer(-1), "negative tolerance");
             Assert.Throws<ArgumentOutOfRangeException>(() => new TolerantEqualityComparer(0), "zero tolerance doesn't make sense");
+            // ReSharper restore ObjectCreationAsStatement
         }
 
         [Test]
@@ -24,7 +26,7 @@ namespace SharpGeometry.Tests.EqualityComparer
 
             Vector3D a = new Vector3D(1, 2, 3);
             Vector3D b = new Vector3D(1.04999, 2.04999, 3.04999); // length difference > tolerance
-            Assert.True(sut.Equals(a,b));
+            Assert.True(sut.Equals(a, b));
             Point3D p1 = new Point3D(1, 2, 3);
             Point3D p2 = new Point3D(1.04999, 2.04999, 3.04999);
             Assert.True(sut.Equals(p1, p2));
@@ -82,7 +84,7 @@ namespace SharpGeometry.Tests.EqualityComparer
             var sut = new TolerantEqualityComparer(tolerance);
             HashSet<Vector3D> set1 = new HashSet<Vector3D>();
             HashSet<Vector3D> set2 = new HashSet<Vector3D>(sut);
-            
+
             const int n = 100;
             for (int i = 0; i < n; i++)
             {

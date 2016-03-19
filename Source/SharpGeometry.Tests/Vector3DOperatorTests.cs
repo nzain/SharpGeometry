@@ -47,15 +47,15 @@ namespace SharpGeometry.Tests
         {
             Vector3D v = new Vector3D(1, 2, 3);
             const double s = -Math.E;
-            Vector3D expected = new Vector3D(s * v.X, s * v.Y, s * v.Z);
+            Vector3D expected = new Vector3D(s*v.X, s*v.Y, s*v.Z);
 
             // left multiplication
-            Vector3D sut = s * v;
+            Vector3D sut = s*v;
             Console.WriteLine($"{s} * {v} = {sut}");
             Assert.That(sut, Is.EqualTo(expected), "left multiply: s*v");
 
             // right multiplication
-            sut = v * s;
+            sut = v*s;
             Console.WriteLine($"{v} * {s} = {sut}");
             Assert.That(sut, Is.EqualTo(expected), "right multiply: v*s");
         }
@@ -67,7 +67,7 @@ namespace SharpGeometry.Tests
             double s = 10;
             Vector3D expected = new Vector3D(0.1, 0.2, 0.3);
 
-            Vector3D sut = v / s;
+            Vector3D sut = v/s;
             Console.WriteLine($"{v} / {s} = {sut}");
             Assert.That(sut, Is.EqualTo(expected));
         }
@@ -76,7 +76,7 @@ namespace SharpGeometry.Tests
         public void VectorScalarDivisionByZero()
         {
             Vector3D v = new Vector3D(1, 2, 3);
-            Assert.Throws<DivideByZeroException>(delegate { var sut = v / 0; });
+            Assert.Throws<DivideByZeroException>(() => Console.WriteLine(v/0));
         }
     }
 }

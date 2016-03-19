@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="EqualityComparer\RasterEqualityComparer.cs" />
     <Compile Include="EqualityComparer\TolerantEqualityComparer.cs" />
+    <Compile Include="Matrix3D.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Vector3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

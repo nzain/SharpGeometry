@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace SharpGeometry.Tests
@@ -16,7 +12,7 @@ namespace SharpGeometry.Tests
         {
             double[] arr = { 0.1, 0.2, 0.3 };
             var sut = new Point3D(arr);
-            Assert.That(sut.IsUndefined, Is.False);
+            Assert.That(sut.IsUndefined(), Is.False);
             Assert.That(sut.X, Is.EqualTo(arr[0]));
             Assert.That(sut.Y, Is.EqualTo(arr[1]));
             Assert.That(sut.Z, Is.EqualTo(arr[2]));
@@ -29,11 +25,13 @@ namespace SharpGeometry.Tests
             double[] one = { 0.2 };
             double[] two = { 1, 2 };
             double[] many = new double[4];
+            // ReSharper disable ObjectCreationAsStatement
             Assert.Throws<ArgumentNullException>(() => new Point3D(null));
             Assert.Throws<ArgumentException>(() => new Point3D(empty));
             Assert.Throws<ArgumentException>(() => new Point3D(one));
             Assert.Throws<ArgumentException>(() => new Point3D(two));
             Assert.Throws<ArgumentException>(() => new Point3D(many));
+            // ReSharper restore ObjectCreationAsStatement
         }
 
         [Test]
@@ -97,7 +95,8 @@ namespace SharpGeometry.Tests
             Assert.That(b == a, Is.False);
             Assert.That(b != a, Is.True);
 
-            // obj
+            // object
+            // ReSharper disable once SuspiciousTypeConversion.Global
             Assert.That(a.Equals("cat"), Is.False);
             Assert.That(a.Equals(null), Is.False);
         }
@@ -121,7 +120,16 @@ namespace SharpGeometry.Tests
             var vec = new Vector3D(-5, -4, -3);
 
             var sut = p + vec;
-            Console.WriteLine($"{p} + {vec} = {sut}");
+            Assert.That(sut, Is.EqualTo(new Point3D(-4, -2, 0)));
+        }
+
+        [Test]
+        public void PointPlusPoint()
+        {
+            var p = new Point3D(1, 2, 3);
+            var other = new Point3D(-5, -4, -3);
+
+            var sut = p + other;
             Assert.That(sut, Is.EqualTo(new Point3D(-4, -2, 0)));
         }
 
@@ -132,8 +140,17 @@ namespace SharpGeometry.Tests
             var vec = new Vector3D(-4, 8, -12);
 
             var sut = p - vec;
-            Console.WriteLine($"{p} - {vec} = {sut}");
             Assert.That(sut, Is.EqualTo(new Point3D(5, -10, 15)));
+        }
+
+        [Test]
+        public void PointMinusPoint()
+        {
+            var p = new Point3D(1, 2, 3);
+            var other = new Point3D(-5, -4, -3);
+
+            var sut = p - other;
+            Assert.That(sut, Is.EqualTo(new Point3D(6, 6, 6)));
         }
     }
 }

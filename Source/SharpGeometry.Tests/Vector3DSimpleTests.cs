@@ -37,11 +37,13 @@ namespace SharpGeometry.Tests
             double[] one = { 0.2 };
             double[] two = { 1, 2 };
             double[] many = new double[4];
+            // ReSharper disable ObjectCreationAsStatement
             Assert.Throws<ArgumentNullException>(() => new Vector3D(null));
             Assert.Throws<ArgumentException>(() => new Vector3D(empty));
             Assert.Throws<ArgumentException>(() => new Vector3D(one));
             Assert.Throws<ArgumentException>(() => new Vector3D(two));
             Assert.Throws<ArgumentException>(() => new Vector3D(many));
+            // ReSharper restore ObjectCreationAsStatement
         }
 
         [Test]
@@ -52,7 +54,7 @@ namespace SharpGeometry.Tests
             Assert.That(default(Vector3D), Is.EqualTo(zero));
             Assert.That(zero.IsZero(), Is.True);
         }
-        
+
         [Test]
         public void VectorEquality()
         {
@@ -77,6 +79,7 @@ namespace SharpGeometry.Tests
             Assert.That(b != a, Is.True);
 
             // obj
+            // ReSharper disable once SuspiciousTypeConversion.Global
             Assert.That(a.Equals("cat"), Is.False);
             Assert.That(a.Equals(null), Is.False);
         }
@@ -89,15 +92,16 @@ namespace SharpGeometry.Tests
             HashSet<int> hashcodes = new HashSet<int>();
             for (int i = 0; i < n; i++)
             {
-                Vector3D v = new Vector3D(rnd.NextDouble() * 2 - 1,
-                    rnd.NextDouble() * 100 - 50,
-                    rnd.NextDouble() * 20 - 10);
+                Vector3D v = new Vector3D(rnd.NextDouble()*2 - 1,
+                    rnd.NextDouble()*100 - 50,
+                    rnd.NextDouble()*20 - 10);
                 int hash = v.GetHashCode();
                 hashcodes.Add(hash);
             }
             int collisions = n - hashcodes.Count;
-            Console.WriteLine($"{n} random vectors produced {hashcodes.Count} different hashcodes => {n - hashcodes.Count} collisions");
-            var percent = (double)collisions / (double)n;
+            Console.WriteLine(
+                $"{n} random vectors produced {hashcodes.Count} different hashcodes => {n - hashcodes.Count} collisions");
+            double percent = (double)collisions/n;
             Console.WriteLine($"collisions: {percent:P3} (raw {percent:F5})");
             Assert.That(percent, Is.LessThan(0.01));
         }
