@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <description>$description$</description>
+    <authors>Patrick Stalph</authors>
+    <owners>Patrick Stalph</owners>
+    <licenseUrl>https://github.com/nzain/SharpGeometry/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/nzain/SharpGeometry/</projectUrl>
+    <!--<iconUrl>..</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>3D Math Vector Matrix Algebra</tags>
+    <releaseNotes>First release.</releaseNotes>
+    <copyright>Copyright Patrick Stalph 2016</copyright>
+  </metadata>
+</package>

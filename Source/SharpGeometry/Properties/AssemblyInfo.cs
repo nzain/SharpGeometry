@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 [assembly: AssemblyTitle("SharpGeometry")]
 [assembly: AssemblyProduct("SharpGeometry")]
 [assembly: AssemblyCopyright("Copyright © Patrick Stalph 2016")]
-[assembly: AssemblyDescription("Provides geometry operations in 3D space. Vectors and matrices enable basic 3D algebra, but additional shapes (line, plane, etc.) are supported as well.")]
+[assembly: AssemblyDescription("Provides geometry operations in 3D space: Vector3D, Matrix3D, and Point3D have all intuitive operators implemented, which allows for fluent algebra formulas in code.")]
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: AssemblyVersion("0.2.*")]
