@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGeometry", "SharpGeometry\SharpGeometry.csproj", "{03EEBCA6-444D-4FC8-93B8-621C18474697}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2AFED705-5A71-45B4-AE09-436C376DA1A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGeometry.Tests", "SharpGeometry.Tests\SharpGeometry.Tests.csproj", "{B67D0BA2-7B3F-4DA1-AEF0-1854038F56AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{B6EC999A-E487-4264-B524-555F53448E66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGeometry.Demo", "SharpGeometry.Demo\SharpGeometry.Demo.csproj", "{8E0FA0C6-3659-4780-81E5-9C0449DD6307}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,11 +27,16 @@ Global
 		{B67D0BA2-7B3F-4DA1-AEF0-1854038F56AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B67D0BA2-7B3F-4DA1-AEF0-1854038F56AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B67D0BA2-7B3F-4DA1-AEF0-1854038F56AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E0FA0C6-3659-4780-81E5-9C0449DD6307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E0FA0C6-3659-4780-81E5-9C0449DD6307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E0FA0C6-3659-4780-81E5-9C0449DD6307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E0FA0C6-3659-4780-81E5-9C0449DD6307}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B67D0BA2-7B3F-4DA1-AEF0-1854038F56AF} = {2AFED705-5A71-45B4-AE09-436C376DA1A7}
+		{8E0FA0C6-3659-4780-81E5-9C0449DD6307} = {B6EC999A-E487-4264-B524-555F53448E66}
 	EndGlobalSection
 EndGlobal
